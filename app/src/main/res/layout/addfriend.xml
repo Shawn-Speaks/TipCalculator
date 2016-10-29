@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:hint="Enter A Friend's Name"
             android:text=""
+            android:inputType="numberDecimal"
             android:id="@+id/editNameText"/>
 
             <Button

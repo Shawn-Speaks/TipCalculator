@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,10 +19,13 @@ import shawn.c4q.nyc.derplist.model.ListItem;
  * Created by shawnspeaks on 10/20/16.
  */
 
-public class DerpAdapter extends RecyclerView.Adapter<DerpAdapter.DerpHolder> {
-
+public class DerpAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+ //put generic in viewholder
     private List<ListItem> listData;
     private LayoutInflater inflater;
+    private int headerView = 0;
+
+
 
 
     public DerpAdapter(){
@@ -38,18 +42,47 @@ public class DerpAdapter extends RecyclerView.Adapter<DerpAdapter.DerpHolder> {
         this.listData = listData;
     }
 
+
     @Override
-    public DerpHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.listitem, parent, false);
-        return new DerpHolder(view);
+    public int getItemViewType(int position) {
+        if(position == 0) {
+            return headerView;
+        }
+        return super.getItemViewType(position);
     }
 
     @Override
-    public void onBindViewHolder(DerpHolder holder, int position) {
-        ListItem item = listData.get(position);
-        holder.title.setText(item.getTitle());
-        holder.icon.setImageResource(item.getImageResId());
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if(viewType == headerView){
+            View view = inflater.inflate(R.layout.listitem, parent, false);
+            return new DerpHolder(view);
+        }else{
+            View view = inflater.inflate(R.layout.fooditemview, parent, false);
+            return new DerpHolder2(view);
+        }
     }
+
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if(holder instanceof DerpHolder){
+            ListItem item = listData.get(position);
+            ((DerpHolder) holder).title.setText(item.getTitle());
+            ((DerpHolder) holder).icon.setImageResource(item.getImageResId());
+        }else{
+
+            ((DerpHolder2) holder).mFood.setText(R.string.add);
+
+        }
+    }
+
+
+//    @Override
+//    public void onBindViewHolder(DerpHolder holder, int position) {
+//        ListItem item = listData.get(position);
+//        holder.title.setText(item.getTitle());
+//        holder.icon.setImageResource(item.getImageResId());
+//    }
 
     @Override
     public int getItemCount() {
@@ -68,6 +101,21 @@ public class DerpAdapter extends RecyclerView.Adapter<DerpAdapter.DerpHolder> {
             title = (TextView) itemView.findViewById(R.id.item_text);
             icon = (ImageView) itemView.findViewById(R.id.img_icon);
             container = itemView.findViewById(R.id.cont_item_root);
+        }
+    }
+
+    class DerpHolder2 extends RecyclerView.ViewHolder {
+        private EditText mFood;
+        private EditText mQuantity;
+        private EditText mPrice;
+        private View container;
+
+        public DerpHolder2(View itemView) {
+            super(itemView);
+            mFood = (EditText) itemView.findViewById(R.id.food_edit_text);
+            mQuantity = (EditText) itemView.findViewById(R.id.qty_edit_text);
+            mPrice = (EditText) itemView.findViewById(R.id.price_edit_text);
+            container = itemView.findViewById(R.id.linear_recView_container);
         }
     }
 

@@ -31,5 +31,22 @@
       android:clickable="true"
       android:onClick="onClick" />
 
+  <TextView
+      android:layout_width="60dp"
+      android:layout_height="60dp"
+      android:text="!"
+      android:id="@+id/addFood"
+      android:background="@drawable/add_friend_button"
+      android:gravity="center"
+      android:textSize="24sp"
+      android:textColor="#ffffff"
+      android:layout_margin="16dp"
+      android:textStyle="bold"
+      android:layout_alignParentBottom="true"
+      android:layout_alignParentRight="true"
+      android:clickable="true"
+      android:onClick="onClick" />
+
+
 
 </RelativeLayout>
